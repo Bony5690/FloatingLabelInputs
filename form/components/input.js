@@ -21,7 +21,7 @@ export default class FloatingLabelInput extends Component {
   }
 
   render() {
-    const { label, placeholder, multiline, numberOfLines,  ...props } = this.props;
+    const { label, placeholder, multiline, numberOfLines, onSubmitEditing, reference, returnKeyType, ...props } = this.props;
     const labelStyle = {
       position: 'absolute',
       left: 0,
@@ -45,7 +45,10 @@ export default class FloatingLabelInput extends Component {
         </Animated.Text>
         <TextInput
           {...props}
+          ref={reference}
+          returnKeyType={returnKeyType}
           numberOfLines={numberOfLines}
+          onSubmitEditing={onSubmitEditing}
           multiline={multiline}
           placeholder={placeholder}
           value={this.props.value}

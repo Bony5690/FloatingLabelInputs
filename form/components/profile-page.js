@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View,  ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import ImageInfo from './image-info';
 import FloatingLabelInput from './input';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import profilePic from './image/profile-pic.png';
 
 class ProfilePage extends Component {
   constructor() {
@@ -11,22 +11,28 @@ class ProfilePage extends Component {
     this.state = {
       brokerLicense: '435872345',
       firstName: 'Dan',
-      LastName: 'Spillane',
+      lastName: 'Spillane',
       email: 'dan@brokerassist.com',
       phoneNumber: '(708) 829-3729',
       teamName: '',
       bio: 'Enter a brief bio about yourself',
-      pic: ''
+      pic: profilePic,
+
 
     }
+    this.textInput = {}
   }
+
+  focusNextTextInput(id) {
+   this.textInput[id].focus();
+}
 
   pickImage = () => {
     ImagePicker.openPicker({
       width: 300,
       cropping: true,
       height: 400,
-   
+      freeStyleCropEnabled: true
     }).then(image => {
       this.setState({pic: {uri: image.path}});
     }).catch(e => {
@@ -41,7 +47,7 @@ class ProfilePage extends Component {
 
   
   render() {
-    const { brokerLicense, firstName, LastName, email, teamName, phoneNumber, bio, pic } = this.state;
+    const { brokerLicense, firstName, lastName, email, teamName, phoneNumber, bio, pic } = this.state;
     const teamNamePlaceholder = <Text>Team Name<Text style={styles.teamNamePlaceholderText}> Optional</Text></Text>
     const bioPlaceholder = <Text>Bio<Text style={styles.bioPlaceholderText}> Optional</Text></Text>
     return (
@@ -59,7 +65,17 @@ class ProfilePage extends Component {
             brokerRealty='Dream Town Reality'
           />
           <View style={{ paddingHorizontal: 25 }}>
+         
+
             <FloatingLabelInput
+               onSubmitEditing={() => {
+                this.focusNextTextInput("two")
+                
+              }}
+              reference={input => {
+                this.textInput["one"] = input;
+              }}
+              returnKeyType={'next'}
               autoCapitalize='none'
               style={{ marginTop: 30, }}
               label='NAR Broker License'
@@ -69,6 +85,14 @@ class ProfilePage extends Component {
             />
 
             <FloatingLabelInput
+       onSubmitEditing={() => {
+        this.focusNextTextInput("three")
+        
+      }}
+      reference={input => {
+        this.textInput["two"] = input;
+      }}
+      returnKeyType={'next'}
               autoCapitalize='none'
               style={{ marginTop: 30, }}
               label='First Name'
@@ -78,17 +102,31 @@ class ProfilePage extends Component {
             />
 
             <FloatingLabelInput
+            onSubmitEditing={() => {
+              this.focusNextTextInput("four")
+              
+            }}
+             reference={input => {
+              this.textInput["three"] = input;
+            }}
               autoCapitalize='none'
               style={{ marginTop: 30, }}
               label='Last Name'
               onChange={(val) => this.setValue('lastName', val)}
-              value={LastName}
+              value={lastName}
               valid={true}
             />
 
 
             <FloatingLabelInput
               autoCapitalize='none'
+              onSubmitEditing={() => {
+                this.focusNextTextInput("five")
+                
+              }}
+              reference={input => {
+                this.textInput["four"] = input;
+              }}
               style={{ marginTop: 30, }}
               textContentType='emailAddress'
               label='First Name'
@@ -101,6 +139,13 @@ class ProfilePage extends Component {
 
             <FloatingLabelInput
               autoCapitalize='none'
+              onSubmitEditing={() => {
+                this.focusNextTextInput("six")
+                
+              }}
+              reference={input => {
+                this.textInput["five"] = input;
+              }}
               style={{ marginTop: 30, }}
               label='Phone Number'
               onChange={(val) => this.setValue('phoneNumber', val)}
@@ -113,6 +158,13 @@ class ProfilePage extends Component {
 
 
             <FloatingLabelInput
+             onSubmitEditing={() => {
+              this.focusNextTextInput("seven")
+              
+            }}
+            reference={input => {
+              this.textInput["six"] = input;
+            }}
               autoCapitalize='none'
               style={{ marginTop: 30, }}
               label={teamNamePlaceholder}
@@ -122,6 +174,9 @@ class ProfilePage extends Component {
             />
 
             <FloatingLabelInput
+              reference={input => {
+                this.textInput["seven"] = input;
+              }}
               autoCapitalize='none'
               style={{ marginTop: 30, }}
               label={bioPlaceholder}
@@ -130,6 +185,8 @@ class ProfilePage extends Component {
               value={bio}
               valid={true}
             />
+
+             
 
 
           </View>

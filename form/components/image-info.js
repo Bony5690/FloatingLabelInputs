@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         fontSize: 15, lineHeight: 20, color: '#8E8E93', letterSpacing: -0.24
     },
     profilePic: {
-        width: 90, height: 84
+        width: 92, height: 86, borderRadius: 40
     },
     picWrapper: {
         padding: 20
